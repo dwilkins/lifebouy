@@ -6,9 +6,12 @@
 /doc/
 /pkg/
 /spec/reports/
+/spec/examples.txt
 /tmp/
 *.bundle
 *.so
 *.o
 *.a
 mkmf.log
+.ruby-version
+.ruby-gemset
