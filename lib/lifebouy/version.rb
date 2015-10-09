@@ -1,0 +1,3 @@
+module Lifebouy
+  VERSION = "0.0.1"
+end
