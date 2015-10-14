@@ -12,18 +12,36 @@ module Lifebouy
     end
 
     describe 'validate_request_xml!' do
-      let(:request_validator) { RequestHandler.new(globalweather_wsdl) }
+      let(:request_handler) { RequestHandler.new(globalweather_wsdl) }
 
       it 'does not raise an error with a valid request' do
         expect {
-          request_validator.validate_request_xml!(valid_globalweather_request_1)
+          request_handler.validate_request_xml!(valid_globalweather_request_1)
         }.to_not raise_error
       end
       
       it 'does raise a MalformedRequestXml error with an invalid request and indicate the line of the error' do
         expect {
-          request_validator.validate_request_xml!(valid_globalweather_request_2)
+          request_handler.validate_request_xml!(valid_globalweather_request_2)
         }.to raise_error(MalformedRequestXml, /Line 7:/)
+      end
+    end
+    
+    describe 'validate_request_xml?' do
+      let(:request_handler) { RequestHandler.new(globalweather_wsdl) }
+      
+      it 'returns true with a valid request' do
+        expect(
+          request_handler.validate_request_xml?(valid_globalweather_request_1)
+        ).to be_truthy
+      end
+      
+      it 'returns false with an invalid request' do
+        expect(
+          request_handler.validate_request_xml?(valid_globalweather_request_2)
+        ).to be_falsey
+        
+        expect(request_handler.request_error).to_not be_nil
       end
     end
   end

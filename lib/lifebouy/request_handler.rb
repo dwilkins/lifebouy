@@ -12,6 +12,8 @@ module Lifebouy
   end
 
   class RequestHandler
+    attr_reader :request_error
+
     def initialize(wsdl_file)
       @wsdl = Nokogiri::XML(File.read(wsdl_file))
       # Find the root schema node
