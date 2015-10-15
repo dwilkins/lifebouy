@@ -12,9 +12,9 @@ module Lifebouy
   end
 
   class RequestHandler
-    attr_reader :request_error
+    attr_reader :request_error, :schema, :request_doc
 
-    def initialize(wsdl_file)
+    def initialize(wsdl_file, request_xml)
       @wsdl = Nokogiri::XML(File.read(wsdl_file))
       # Find the root schema node
       schema_namespace = @wsdl.namespaces.select { |k,v| v =~ /XMLSchema/ }.first
@@ -25,11 +25,16 @@ module Lifebouy
       schema_doc = Nokogiri::XML::Document.new
       schema_doc << schema_root
       @schema = Nokogiri::XML::Schema(schema_doc.to_xml)
+      
+      envelope = Nokogiri::XML(request_xml)
+      request_data = envelope.at_xpath("//#{envelope.root.namespace.prefix}:Body").first_element_child
+      @request_doc = Nokogiri::XML::Document.new
+      @request_doc << request_data
     end
 
-    def validate_request_xml?(request_xml)
+    def validate_request_xml?
       begin
-        validate_request_xml!(request_xml)
+        validate_request_xml!
         return true
       rescue MalformedRequestXml => e
         @request_error = e
@@ -37,9 +42,7 @@ module Lifebouy
       end
     end
 
-    def validate_request_xml!(request_xml)
-      request_doc = pull_data_doc_from_envelope(request_xml)
-
+    def validate_request_xml!
       request_errors = []
 
       @schema.validate(request_doc).each do |error|
@@ -47,16 +50,6 @@ module Lifebouy
       end
 
       raise MalformedRequestXml.new(request_errors) unless request_errors.empty?
-    end
-    
-    private
-    def pull_data_doc_from_envelope(envelope_text)
-      envelope = Nokogiri::XML(envelope_text)
-      request_data = envelope.at_xpath("//#{envelope.root.namespace.prefix}:Body").first_element_child
-      request_doc = Nokogiri::XML::Document.new
-      request_doc << request_data
-      
-      request_doc
     end
   end
 end
