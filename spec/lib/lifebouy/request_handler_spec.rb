@@ -44,5 +44,28 @@ module Lifebouy
         expect(request_handler_invalid.request_error).to_not be_nil
       end
     end
+    
+    describe 'request_data' do
+      it 'builds the expected request data' do
+        request_data = request_handler_valid.request_data
+        expect(request_data).to_not be_nil
+        expect(request_data.name).to eq('GetCitiesByCountry')
+        expect(request_data.country_name).to eq('United States')
+      end
+      
+      it 'builds request data with more than one parameter' do
+        wsdl_file = File.join(fixture_path, 'service_definitions', 'mortgage.wsdl')
+        request_text = File.read(File.join(fixture_path, 'sample_requests', 'mortgage', 'get_mortgage_payment_good.xml'))
+        handler = RequestHandler.new(wsdl_file, request_text)
+        expect(handler.validate_request_xml?).to be_truthy
+        request_data = handler.request_data
+        expect(request_data).to_not be_nil
+        expect(request_data.years).to eq(30)
+        expect(request_data.interest).to eq(3.5)
+        expect(request_data.loan_amount).to eq(150000.00)
+        expect(request_data.annual_tax).to eq(2000.00)
+        expect(request_data.annual_insturance).to eq(750.00)
+      end
+    end
   end
 end
