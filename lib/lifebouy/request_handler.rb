@@ -29,18 +29,13 @@ module Lifebouy
       schema_root.add_namespace_definition(target_namespace.first.split(/:/).last, target_namespace.last)
       # Create a document to store the schema and the parse it into a Schema for validation
       @schema_doc = Nokogiri::XML::Document.new
-      @schema_doc.namespaces[target_namespace.first] = target_namespace.last
-      binding.pry
       @schema_doc << schema_root
-      binding.pry
       @schema = Nokogiri::XML::Schema(@schema_doc.to_xml)
-      
+
       envelope = Nokogiri::XML(request_xml)
       request_data = envelope.at_xpath("//#{envelope.root.namespace.prefix}:Body").first_element_child
       @request_doc = Nokogiri::XML::Document.new
       @request_doc << request_data
-      
-      
     end
 
     def validate_request_xml?
