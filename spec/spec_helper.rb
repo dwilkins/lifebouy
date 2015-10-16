@@ -2,6 +2,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'rspec'
+require 'pry'
 
 ENV["COVERAGE"] ||= 'off'
 
@@ -14,8 +15,9 @@ end
 
 # load in the support files, if any
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+Dir[File.expand_path(File.join('..', '..', 'lib', '**', '*.rb'), __FILE__)].each { |f| require f }
 
-Rspec.configure do |config|
+RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET/">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <web:GetMortgagePayment>
+      <web:Years>30</web:Years>
+      <web:Interest>3.5</web:Interest>
+      <web:LoanAmount>150000.00</web:LoanAmount>
+      <web:AnnualTax>2000.00</web:AnnualTax>
+      <web:AnnualInsurance>750.00</web:AnnualInsurance>
+    </web:GetMortgagePayment>
+  </soapenv:Body>
+</soapenv:Envelope>

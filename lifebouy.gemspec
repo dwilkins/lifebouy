@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "lifebouy"
   spec.version       = Lifebouy::VERSION
   spec.authors       = ["Reed Swenson"]
-  spec.email         = ["reed@swensonlogics.com.com"]
+  spec.email         = ["reed@swensonlogics.com"]
   spec.summary       = %q{A Rails generator that builds SOAP services based off a given WSDL.}
   spec.description   = %q{
 Making SOAP services for a provided WSDL in Rails can be tedious.  Lifebouy 
