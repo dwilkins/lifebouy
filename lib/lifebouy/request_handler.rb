@@ -57,16 +57,16 @@ module Lifebouy
 
       raise MalformedRequestXml.new(request_errors) unless request_errors.empty?
     end
-    
+
     def request_data
       @request_data ||= build_request_data
     end
-    
+
     private
     def build_request_data
       @request_data = node_to_ostruct(@request_doc.first_element_child)
     end
-    
+
     def node_to_ostruct(node)
       ret = OpenStruct.new
       ret[:name] = node.node_name
@@ -77,22 +77,22 @@ module Lifebouy
           ret[ele.node_name.underscore.to_sym] = xml_to_type(ele)
         end
       end
-      
+
       ret
     end
-    
+
     def xml_to_type(node)
       return nil if node.text.blank?
       # find the type in the WSDL
       t_node = @schema_doc.at_xpath("//#{@schema_prefix}:element[@name='#{node.node_name}']")
       case t_node[:type].gsub(/#{@schema_prefix}:/, '')
-      when 'decimal' || 'float'
-        Float.parse(node.text)
-      when 'integer'
-        Integer.parse(node.text)
+      when 'decimal', 'float', 'double'
+        node.text.to_f
+      when 'integer', 'int'
+        node.text.to_i
       when 'boolean'
         node.text == 'true'
-      when 'date' || 'time' || 'dateTime'
+      when 'date', 'time', 'dateTime'
         Date.parse(node.text)
       else
         node.text

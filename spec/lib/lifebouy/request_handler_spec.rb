@@ -64,7 +64,7 @@ module Lifebouy
         expect(request_data.interest).to eq(3.5)
         expect(request_data.loan_amount).to eq(150000.00)
         expect(request_data.annual_tax).to eq(2000.00)
-        expect(request_data.annual_insturance).to eq(750.00)
+        expect(request_data.annual_insurance).to eq(750.00)
       end
     end
   end
