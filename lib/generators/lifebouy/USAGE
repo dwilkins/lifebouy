@@ -1,0 +1,20 @@
+Description:
+    Stubs out a new controller and the methods specified in the
+    specified WSDL . Pass the controller name, either
+    CamelCased or under_scored and the WSDL file that describes
+    the service
+
+    To create a controller within a module, specify the controller name as a
+    path like 'parent_module/controller_name'.
+
+    This generates a controller class in app/controllers and invokes helper,
+    template engine, assets, and test framework generators.
+
+Example:
+    `rails generate lifebouy GlobalWeather http://www.webservicex.net/globalweather.asmx?WSDL`
+
+    GlobalWeather controller with URLs like /global_weather/get_weather.
+        Controller: app/controllers/global_weather_controller.rb
+        Test:       test/controllers/global_weather_controller_test.rb
+        Helper:     app/helpers/global_weather_helper.rb
+        actions:    get_weather, get_cities_by_country

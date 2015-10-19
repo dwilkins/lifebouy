@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["reed@swensonlogics.com"]
   spec.summary       = %q{A Rails generator that builds SOAP services based off a given WSDL.}
   spec.description   = %q{
-Making SOAP services for a provided WSDL in Rails can be tedious.  Lifebouy 
+Making SOAP services for a provided WSDL in Rails can be tedious.  Lifebouy
 takes the tedium out of the implementation.
 }
   spec.homepage      = "https://github.com/reedswenson/lifebouy"
@@ -26,5 +26,6 @@ takes the tedium out of the implementation.
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.3"
+  spec.add_development_dependency "generator_spec"
   spec.add_development_dependency "rails", ">= 4.0.0"
 end

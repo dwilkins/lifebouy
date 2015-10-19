@@ -6,6 +6,7 @@
 /doc/
 /pkg/
 /spec/reports/
+/spec/generators/tmp
 /spec/examples.txt
 /tmp/
 *.bundle
